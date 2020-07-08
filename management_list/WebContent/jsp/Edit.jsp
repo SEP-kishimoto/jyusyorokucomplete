@@ -78,6 +78,9 @@ if (errmsg == null) {
 		<dt>電話番号</dt><dd><span>:&nbsp;</span><input type="text" name="tel"></dd>
 		<%} else if (!(tel.matches("\\d{3}-\\d{4}-\\d{4}"))) { %>
 		<dt>電話番号</dt><dd><span>:&nbsp;</span><input type="text" name="tel" value="<%=tel%>"></dd>
+		<%} else {%>
+		<%tel = tel.replace("-", ""); %>
+		<dt>電話番号</dt><dd><span>:&nbsp;</span><input type="text" name="tel" value="<%=tel.substring(0, 3) + "-" + tel.substring(3, 7) + "-" + tel.substring(7, 11)%>"></dd>
 		<%} %>
 		<dt>カテゴリ</dt><dd><span>:</span>
 		<select name="categoryid" >

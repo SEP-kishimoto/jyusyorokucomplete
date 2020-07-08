@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+#add {
+	width: 200px;
+	height: 30px;
+	font-size: 20px;
+	background-color: #797979;
+}
+
+th {
+	background-color: #2196f3;
+}
+
+tr {
+	text-align: center;
+}

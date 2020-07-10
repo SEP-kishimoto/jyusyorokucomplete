@@ -161,7 +161,11 @@ rs = (ResultSet) request.getAttribute("Result");
     	<input type="hidden" name="id" value="<%=rs.getInt("id") %>">
     	<input type="hidden" name="name" value="<%=rs.getString("name") %>">
     	<input type="hidden" name="address" value="<%=rs.getString("address") %>">
-    	<input type="hidden" name="tel" value="<%=rs.getString("tel").substring(0, 3) + "-" + rs.getString("tel").substring(3, 7) + "-" + rs.getString("tel").substring(7, 11) %>">
+    	<%if (rs.getString("tel").equals("")) { %>
+    		<input type="hidden" name="tel" value="<%=rs.getString("tel") %>">
+    	<%} else { %>
+    		<input type="hidden" name="tel" value="<%=rs.getString("tel").substring(0, 3) + "-" + rs.getString("tel").substring(3, 7) + "-" + rs.getString("tel").substring(7, 11) %>">
+    	<%} %>
     	<input type="hidden" name="categoryname" value="<%=rs.getString("categoryname") %>">
     	<input type="submit" class="button2" formaction="./jsp/Edit.jsp" value="編集"><input type="submit" class="button2" formaction="./jsp/Delete.jsp" value="削除"></form></td>
 	</tr>

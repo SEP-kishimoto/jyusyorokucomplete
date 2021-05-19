@@ -1,27 +1,27 @@
-package add;
+package jyusyoroku;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import common.Common;
-
 /**
- * Servlet implementation class AddBL
+ * Servlet implementation class EditCommit
  */
-@WebServlet("/AddBL")
-public class AddBL extends HttpServlet {
+@WebServlet("/EditCommit")
+public class EditCommit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddBL() {
+    public EditCommit() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,9 +30,6 @@ public class AddBL extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-
 
 	}
 
@@ -40,45 +37,53 @@ public class AddBL extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		// 変数の宣言
+		Connection connect = null;
+		Statement stmt = null;
+		// int i = 0;
+
+		String UpdQuery = "";
+		String id = "";
 		String name = "";
 		String address = "";
 		String tel = "";
 		String categoryid = "";
-		String errmsg = "";
 
-		// 文字コードの設定
+		// 文字コードの変更
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
 
-		// 値の設定
+		// 変数に値を入力
+		id = request.getParameter("id");
 		name = request.getParameter("name");
 		address = request.getParameter("address");
 		tel = request.getParameter("tel");
 		categoryid = request.getParameter("categoryid");
 
-		// エラーメッセージを設定
-		Common common = new Common();
-		errmsg = common.getErr(name, address, tel);
+		// telから-を除去する
+		tel = tel.replace("-", "");
 
-		// 背に席へのリクエストを設定
-		request.setAttribute("name", name);
-		request.setAttribute("address", address);
-		request.setAttribute("tel", tel);
-		request.setAttribute("categoryid", categoryid);
-		request.setAttribute("errmsg", errmsg);
+		// DBに登録する
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kishimoto?characterEncording=UTF-8&serverTimezone=JST", "root", "");
+			stmt = connect.createStatement();
 
-		// errmsgがブランクの場合はAddCheck.jspに遷移、それ以外はAdd.jspへの遷移
+			// UpdQueryにクエリを設定
+			UpdQuery = "UPDATE jyusyoroku"
+					+ " SET name ='" + name + "', address ='" + address + "', tel ='" + tel + "', categoryid ='" + categoryid + "'"
+					+ " WHERE id =" + Integer.parseInt(id);
 
-		if (errmsg == "") {
-			String view = "/jsp/AddCheck.jsp";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-			dispatcher.forward(request, response);
-		} else {
-			String view = "/jsp/Add.jsp";
-			RequestDispatcher dispatcher = request.getRequestDispatcher(view);
-			dispatcher.forward(request, response);
+			// 値を更新する
+			stmt.executeUpdate(UpdQuery);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+
+		// ListBL.javaへの遷移
+		String view = "/management_list/ListBL";
+		response.sendRedirect(view);
 	}
 
 }

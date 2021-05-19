@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <%@ page
-import="add.AddBL"
+import="jyusyoroku.AddBL"
 import="common.Common"
 %>
 

@@ -3,8 +3,8 @@
 
 <!-- import -->
 <%@ page
-import="edit.EditBL"
-import="common.Common"
+import="jyusyoroku.EditBL"
+import="jyusyoroku.Common"
 %>
 
 

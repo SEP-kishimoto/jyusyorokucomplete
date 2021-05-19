@@ -1,4 +1,4 @@
-package list;
+package jyusyoroku;
 
 import java.io.IOException;
 import java.sql.Connection;

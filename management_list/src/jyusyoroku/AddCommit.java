@@ -1,4 +1,4 @@
-package deletecommit;
+package jyusyoroku;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,16 +12,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class DeleteCommit
+ * Servlet implementation class AddCheck
  */
-@WebServlet("/DeleteCommit")
-public class DeleteCommit extends HttpServlet {
+@WebServlet("/AddCommit")
+public class AddCommit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteCommit() {
+    public AddCommit() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -38,28 +38,40 @@ public class DeleteCommit extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 変数の宣言
+		// 変数を宣言
 		Connection connect = null;
 		Statement stmt = null;
 
-		String UpdQuery = "";
-		String id = "";
+		String InsQuery = "";
+		String name = "";
+		String address = "";
+		String tel = "";
+		String categoryid = "";
 
-		// 値を設定する
-		id = request.getParameter("id");
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 
 
+		// 変数に設定
+		name = request.getParameter("name");
+		address = request.getParameter("address");
+		tel = request.getParameter("tel");
+		categoryid = request.getParameter("categoryid");
+
+		// telの文字列から-を取り除く
+		tel = tel.replace("-", "");
+
+		// DBにぶっ込む場所
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kishimoto?characterEncording=UTF-8&serverTimezone=JST", "root", "");
 			stmt = connect.createStatement();
 
-			// DBにリクエスト内容を登録
-			UpdQuery = "DELETE FROM jyusyoroku"
-					+ " WHERE id=" + Integer.parseInt(id);
+			// InsQueryへクエリを設定する
+			InsQuery = "INSERT INTO `jyusyoroku` (`id`, `name`, `address`, `tel`, `categoryid`, `delete_flg`) VALUES (NULL, '"+ name +"', '" + address + "', '" + tel + "', '" + categoryid + "', '0')";
 
-			// 内容を更新させる
-			stmt.executeUpdate(UpdQuery);
+			// DBへ登録する
+			stmt.executeUpdate(InsQuery);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +80,6 @@ public class DeleteCommit extends HttpServlet {
 		// ListBL.javaへの遷移
 		String view = "/management_list/ListBL";
 		response.sendRedirect(view);
-
 	}
 
 }

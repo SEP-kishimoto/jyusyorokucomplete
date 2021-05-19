@@ -1,4 +1,4 @@
-package common;
+package jyusyoroku;
 
 
 import java.io.UnsupportedEncodingException;
@@ -16,7 +16,7 @@ public class Common {
 	 * エラーメッセージ用のメソッドです。引数を処理して戻り値を返します。
 	 * @param 名前 name(String), 住所 address(String), 電話番号 tel(String)
 	 * @return 処理結果データ returnVal
-	 * @see java.util.Common
+	 * @see java.jyusyoroku.Common
 	 */
 	public String getErr(String name, String address, String tel) {
 
@@ -55,7 +55,7 @@ public class Common {
 	 * 文字列のバイト数を取り出すためのメソッドです、引数を処理して戻り値を返します。
 	 * @param 文字列 value(String)
 	 * @return 処理結果データ bytes
-	 * @see java.util.Common
+	 * @see java.jyusyoroku.Common
 	 * */
 
 	public int Bytes(String value) {
@@ -75,7 +75,7 @@ public class Common {
 	/**
 	 * カテゴリのデータを取得するためのメソッド
 	 * @return 処理結果データ rs(ResultSet)
-	 * @see java.util.Common
+	 * @see java.jyusyoroku.Common
 	 * */
 
 	public ResultSet getCategoryAll() {

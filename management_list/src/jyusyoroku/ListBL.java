@@ -102,7 +102,7 @@ public class ListBL extends HttpServlet {
 				/*
 				 * Serchがある場合
 				 */
-				CntQuery = "SELECT COUNT(*) as CNT FROM jyusyoroku WHERE address LIKE '%" + Serch + "%'";
+				CntQuery = "SELECT COUNT(*) as CNT FROM jyusyoroku WHERE address LIKE '%" + Serch + "%' AND delete_flg = 0";
 				rs = stmt.executeQuery(CntQuery);
 				rs.next();
 				listCnt = rs.getInt("CNT");
@@ -110,7 +110,7 @@ public class ListBL extends HttpServlet {
 				/*
 				 * Serchがない場合
 				 */
-				CntQuery = "SELECT COUNT(*) as CNT FROM jyusyoroku";
+				CntQuery = "SELECT COUNT(*) as CNT FROM jyusyoroku WHERE delete_flg = 0";
 				rs = stmt.executeQuery(CntQuery);
 				rs.next();
 				listCnt = rs.getInt("CNT");

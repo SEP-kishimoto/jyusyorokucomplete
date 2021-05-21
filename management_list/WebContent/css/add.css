@@ -1,12 +1,17 @@
 @charset "UTF-8";
 
-
+/*
+body構成
+*/
 body {
 	width: 960px;
 	margin-right: auto;
 	margin-left: auto;
 }
 
+/*
+入力フォーム部分のcss
+*/
 form {
 	padding: 0px 200px;
 }

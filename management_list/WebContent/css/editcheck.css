@@ -1,10 +1,17 @@
 @charset "UTF-8";
 
+/*
+body構成
+*/
 body {
 	width: 960px;
 	margin-right: auto;
 	margin-left: auto;
 }
+
+/*
+編集情報の表示部分css
+*/
 form {
 	padding: 20px 200px;
 }
@@ -27,7 +34,6 @@ select {
 	height: 24px;
 	width: 173px;
 }
-
 
 .button {
 	width: 177px;

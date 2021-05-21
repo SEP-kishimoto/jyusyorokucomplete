@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<!-- import -->
-<%@ page
-import="jyusyoroku.EditBL"
-import="jyusyoroku.Common"
+    pageEncoding="UTF-8" import="jyusyoroku.EditBL" import="jyusyoroku.Common" %>
+<!-- 文字コード宣言 -->
+<%
+request.setCharacterEncoding("UTF-8");
 %>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -19,11 +15,6 @@ import="jyusyoroku.Common"
 </style>
 </head>
 <body>
-
-<!-- 文字コード宣言 -->
-<%
-request.setCharacterEncoding("UTF-8");
-%>
 
 <!-- 変数の宣言 -->
 <%

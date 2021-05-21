@@ -1,27 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ page
-import="jyusyoroku.Common"
+	pageEncoding="UTF-8" import="jyusyoroku.Common"%>
+<%
+request.setCharacterEncoding("UTF-8");
 %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>登録確認</title>
-<style>
-<%@ include file="../css/addcheck.css" %>
-</style>
+	<title>登録確認</title>
+	<style>
+		<%@ include file="../css/addcheck.css" %>
+	</style>
 </head>
-
 <body>
-
-<%
-request.setCharacterEncoding("UTF-8");
-%>
-
 <!-- 変数の宣言 -->
 <%
 String name = "";
@@ -30,7 +21,6 @@ String tel = "";
 String categoryid = "";
 String categoryname = "";
 %>
-
 <!-- 各変数に設定 -->
 <%
 name = (String) request.getAttribute("name");
@@ -40,7 +30,6 @@ categoryid = (String) request.getAttribute("categoryid");
 
 Common common = new Common();
 categoryname = common.getCategoryName(categoryid);
-
 %>
 
 <form method="post">

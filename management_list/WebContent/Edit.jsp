@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<!-- import -->
-<%@ page
-import="jyusyoroku.EditBL"
-import="jyusyoroku.Common"
+    pageEncoding="UTF-8" import="jyusyoroku.EditBL" import="jyusyoroku.Common" import="java.sql.ResultSet" %>
+<!-- 文字コード宣言 -->
+<%
+request.setCharacterEncoding("UTF-8");
 %>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -20,13 +16,7 @@ import="jyusyoroku.Common"
 </head>
 <body>
 
-<!-- 文字コード宣言 -->
-<%
-request.setCharacterEncoding("UTF-8");
-%>
-
 <!-- 変数の宣言 -->
-<%@ page import="java.sql.ResultSet" %>
 <%
 String id = "";
 String name = "";
@@ -45,9 +35,8 @@ rs = common.getCategoryAll();
 
 %>
 
-<!-- 各設定を行う -->
+<!-- 各設定 -->
 <%
-
 errmsg = (String) request.getAttribute("errmsg");
 
 if (errmsg == null) {
@@ -65,8 +54,6 @@ if (errmsg == null) {
 	categoryid = (String) request.getAttribute("categoryid");
 	category = common.getCategoryName(categoryid);
 }
-
-
 %>
 
 <form method="post">

@@ -1,10 +1,17 @@
 @charset "UTF-8";
 
+/*
+body構成
+*/
 body {
 	width: 960px;
 	margin-right: auto;
 	margin-left: auto;
 }
+
+/*
+登録情報の表示部分css
+*/
 form {
 	padding: 20px 200px;
 }

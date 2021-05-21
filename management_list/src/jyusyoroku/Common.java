@@ -91,7 +91,7 @@ public class Common {
 		// JDBCで接続
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kishimoto?characterEncording=UTF-8&serverTimezone=JST", "root", "");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kensyudb?characterEncording=UTF-8&serverTimezone=JST", "Portal", "@k7EA2gUY");
 			stmt = connect.createStatement();
 
 			getQuery = "SELECT categoryid, categoryname FROM category"
@@ -124,7 +124,7 @@ public class Common {
 		// JDBCで接続
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kishimoto?characterEncording=UTF-8&serverTimezone=JST", "root", "");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kensyudb?characterEncording=UTF-8&serverTimezone=JST", "Portal", "@k7EA2gUY");
 
 
 			getQuery = "SELECT categoryid, categoryname FROM category WHERE categoryid = ?";

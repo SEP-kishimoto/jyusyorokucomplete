@@ -1,57 +1,86 @@
 @charset "utf-8";
 
-
+/*
+body構成
+*/
 body {
 	width: 960px;
 	margin-right: auto;
 	margin-left: auto;
 }
 
+/*
+見出し部分に関するcss
+*/
 h1 {
 	font-size: 30px;
 }
 
+/*
+検索ボックスについてのcss
+*/
 .serchbox {
 	display: inline;
 	width: 300px;
 	margin-left: auto;
 }
-
 .serchtable {
   border-collapse: collapse;
   border-spacing: 0;
   margin-right: 40px;
 }
-
 .serchtable td {
 	padding: 0px 0px;
 }
-
 .serchtext {
 	width: 200px;
 	height: 20px;
-	align: right;
 }
-
-.button {
+.serch-button {
 	font-size: 15px;
 	text-align: center;
 	width: 100%;
 	height: 100%;
 }
 
+/*
+ページング処理に関するcss
+*/
+.page-up {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	margin-left: 20px;
+}
+.page-down {
+	margin-top: 10px;
+	margin-left: 20px;
+}
+ul {
+	margin: 5px 5px;
+	padding: 0;
+}
 
+ul li {
+	display: inline;
+}
+
+/*
+id指定、新規登録ボタンに関するcss
+*/
 #add {
 	width: 200px;
 	height: 30px;
 	font-size: 20px;
 	background-color: #797979;
 }
-
-.paging {
-	align: left;
+.button-bottom {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
+/*
+テーブルリストに関するcss
+*/
 .listcss {
 	width: 960px;
 	border: 1px solid #000000;
@@ -59,14 +88,12 @@ h1 {
 	border-spacing: 0;
 	table-layout: fixed;
 }
-
 .listcss tr th {
 	height: 50px;
 	border: 1px solid #000000;
 	border-collapse: collapse;
 	border-spacing: 0;
 }
-
 .listcss tr td {
 	height: 40px;
 	border: 1px solid #000000;
@@ -76,24 +103,19 @@ h1 {
 .listcss tr td p {
 	margin: 0px 0px;
 }
-
-
 th {
 	background-color: #00bfff;
 	width: 100%px;
 	text-align: center;
 }
-
 tr {
 	text-align: center;
 }
-
 .threereader {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
-
 .threereader .tooltip {
     visibility: hidden;
     width: 500px;
@@ -107,7 +129,6 @@ tr {
     z-index: 1;
     margin-top:10px;
 }
-
 .threereader:hover .tooltip {
     visibility: visible;
 }
@@ -121,34 +142,17 @@ tr {
     border-style: solid;
     border-color: transparent transparent black transparent;
 }
-
 .threereader .tooltip {
     opacity: 0;
     transition: opacity 1s;
 }
-
 .threereader:hover .tooltip {
     opacity: 1;
 }
-
-
-ul {
-	margin: 5px 5px;
-	padding: 0;
-}
-
-ul li {
-	display: inline;
-}
-
-.button2 {
+.table-button {
 	height: 43px;
 	width: 50%;
 	font-size: 15px;
 	background-color: #797979;
 	padding: 0;
-}
-
-.top {
-	margin-top: 20px;
 }

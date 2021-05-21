@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-<%@ page
-import="jyusyoroku.AddBL"
-import="jyusyoroku.Common"
+    pageEncoding="UTF-8" import="jyusyoroku.AddBL" import="jyusyoroku.Common" import="java.sql.ResultSet"%>
+<!-- 文字コード -->
+<%
+request.setCharacterEncoding("UTF-8");
 %>
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,16 +13,7 @@ import="jyusyoroku.Common"
 <%@ include file="../css/add.css" %>
 </style>
 </head>
-
 <body>
-
-<!-- 文字コードset -->
-<%
-request.setCharacterEncoding("UTF-8");
-%>
-<%@ page import="java.sql.ResultSet" %>
-
-
 <!-- 変数の宣言 -->
 <%
 String name = "";
@@ -58,7 +45,6 @@ if (request.getParameter("name") == null) {
 	errmsg = (String) request.getAttribute("errmsg");
 }
 %>
-
 
 <h1>住所録管理システム：住所録登録</h1>
 <form method="post" action="/management_list/AddBL">

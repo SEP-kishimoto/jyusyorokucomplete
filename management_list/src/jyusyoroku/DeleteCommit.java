@@ -38,27 +38,38 @@ public class DeleteCommit extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 変数の宣言
+		/*
+		 * 変数の宣言
+		 */
 		Connection connect = null;
 		Statement stmt = null;
 
 		String UpdQuery = "";
 		String id = "";
 
-		// 値を設定する
+		/*
+		 * 値を設定する
+		 */
 		id = request.getParameter("id");
 
-
+		/*
+		 * DBのdelete_flgを更新し、非表示にする。
+		 */
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kishimoto?characterEncording=UTF-8&serverTimezone=JST", "root", "");
+			connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/kensyudb?characterEncording=UTF-8&serverTimezone=JST", "Portal", "@k7EA2gUY");
 			stmt = connect.createStatement();
 
-			// DBにリクエスト内容を登録
-			UpdQuery = "DELETE FROM jyusyoroku"
-					+ " WHERE id=" + Integer.parseInt(id);
+			/*
+			 * DBにリクエスト内容を登録
+			 */
+			UpdQuery = "UPDATE jyusyoroku"
+					+ " SET delete_flg = 1"
+					+ " WHERE id =" + Integer.parseInt(id);
 
-			// 内容を更新させる
+			/*
+			 * 内容を更新させる
+			 */
 			stmt.executeUpdate(UpdQuery);
 
 		} catch (Exception e) {

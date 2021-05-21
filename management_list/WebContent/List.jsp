@@ -1,58 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="jyusyoroku.ListBL" %>
+    pageEncoding="UTF-8" import="jyusyoroku.ListBL" import="java.sql.*" import="java.net.URLEncoder"
+	import="java.text.NumberFormat" import="java.util.*" %>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>住所録一覧</title>
-
-<style>
-<%@ include file="../css/list.css" %>
-</style>
-
-
+	<meta charset="UTF-8">
+	<title>住所録一覧</title>
+	<style>
+		<%@ include file="../css/list.css" %>
+	</style>
 </head>
 <body>
 <%
 request.setCharacterEncoding("UTF-8");
 %>
 
-<%@ page import="java.sql.ResultSet" %>
-
 <!-- 変数の宣言 -->
-<%!
+<%
 ResultSet rs = null;
 int listCnt = 0;
 String nowPage = null;
 int maxPage = 0;
+ArrayList<jyusyoroku.ListBean> beanList = new ArrayList<jyusyoroku.ListBean>();
+String Serch = (String) request.getAttribute("Serch");
+
 %>
 
 <!-- それぞれの処理 -->
 <%
-
 nowPage = (String) request.getAttribute("Page");
-
 listCnt = (int) request.getAttribute("listCnt");
 
+int now = Integer.parseInt(nowPage);
 maxPage = listCnt / 10;
-
-
 if (listCnt % 10 != 0) {
-	maxPage += 1;
+	maxPage = maxPage + 1;
 }
 
+int start = 0;
+int end = 0;
+
+if (listCnt == 0) {
+	maxPage = 1;
+}
+
+beanList = (ArrayList<jyusyoroku.ListBean>) request.getAttribute("beanList");
 rs = (ResultSet) request.getAttribute("Result");
-
-
 %>
-
 
 <!-- 表示画面のコード -->
 
 <h1>住所録管理システム：住所録一覧</h1>
-<input id="add" type="button" onclick="location.href='./jsp/Add.jsp'" value="新規登録">
+<input id="add" type="button" onclick="location.href='./Add.jsp'" value="新規登録">
 
 <!-- 検索用テキストボックス -->
 
@@ -60,81 +60,74 @@ rs = (ResultSet) request.getAttribute("Result");
 	<table style="float: right" class="serchtable">
 		<tr>
 			<td><label for="jyusyo">住所：</label></td>
-			<td><input id="jyusyo" type="text" name="Serchname" class="serchtext"><br></td>
+			<td><input id="jyusyo" type="text" name="Serch" class="serchtext"><br></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><input type="submit" value="検索" class="button"></td>
+			<td><input type="submit" value="検索" class="serch-button"></td>
 		</tr>
 	</table>
 </form>
 
-<br><br>
-
-<!-- ページング処理を書くよ！ -->
-<form method="get" class="paging">
-	<ul>
-	<!-- 最初に飛ぶ、一段下がる部分 -->
-		<%if (Integer.parseInt(nowPage) == 1) { %>
-			<li>&lt;&lt;</li>
-			<li>&lt;</li>
-		<%} else { %>
-			<li><a href="/management_list/ListBL?Page=1">&lt;&lt;</a></li>
-			<li><a href="/management_list/ListBL?Page=<%=Integer.parseInt(nowPage) - 1 %>">&lt;</a></li>
-		<%} %>
-
-		<!-- 数字で移動する部分 -->
-		<%if (Integer.parseInt(nowPage) == 1 || Integer.parseInt(nowPage) == 2) { %>
-			<%for (int i = 1; i < 6; i++) {%>
-				<%if (Integer.parseInt(nowPage) == i) { %>
-					<li><%=i %></li>
-				<%} else { %>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i %></a></li>
-				<%} %>
-				<%if (i != 5) {%>
-					<li>|</li>
-				<%} %>
-			<%} %>
-
-		<%} else if (Integer.parseInt(nowPage) == maxPage || Integer.parseInt(nowPage) == maxPage - 1) { %>
-			<%for (int i = maxPage - 4; i <= maxPage; i++) { %>
-				<%if (Integer.parseInt(nowPage) == i) {%>
-					<li><%=i%></li>
-				<%} else {%>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i%></a></li>
-				<%} %>
-				<%if (maxPage != i) {%>
-					<li>|</li>
-				<%} %>
+<!-- ページング処理 -->
+<form class="page-up" action="ListBL" method="get">
+		<ul>
+			<li>
+				<%if (now == 1) {%>
+			<a><%="<<"%></a>
+			<%} else { %>
+			<a href="ListBL?Page=1&Serch=<%=Serch %>"><%="<<"%></a>
 			<%}%>
-
-		<%} else { %>
-			<%for (int i = Integer.parseInt(nowPage) -2; i < Integer.parseInt(nowPage) + 3; i++) { %>
-				<%if (Integer.parseInt(nowPage) == i) { %>
-					<li><%=i %></li>
+			</li>
+			<li>
+				<%if (now == 1) {%> <a><%="<"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=now - 1%>&Serch=<%=Serch %>"><%="<"%></a>
+				<%}%>
+			</li>
+			<%
+				if (maxPage <= 5) {
+				start = 1;
+				end = maxPage;
+			} else if (now == maxPage || now == maxPage - 1) {
+				start = maxPage - 4;
+				end = maxPage;
+			} else if (now >= 3) {
+				start = now - 2;
+				end = now + 2;
+			} else {
+				start = 1;
+				end = 5;
+			}
+			for (int i = start; i <= end; i++) {
+			%>
+			<li>
+				<%if (now == i) {%>
+				<a><%=i%></a>
 				<%} else { %>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i%></a></li>
-				<%} %>
-				<%if (Integer.parseInt(nowPage) + 2 != i) {%>
-					<li>|</li>
-				<%} %>
+				<a href="ListBL?Page=<%=i%>&Serch=<%=Serch %>"><%=i%></a>
+				<%}%>
+			</li>
+			<%if (maxPage != i) {%>
+			<li>|</li>
 			<%} %>
-		<%} %>
-
-<!-- 最後に飛ぶ、一段上がる部分 -->
-		<%if (Integer.parseInt(nowPage) == maxPage) { %>
-			<li>&gt;</li>
-			<li>&gt;&gt;</li>
-		<%} else { %>
-			<li><a href="/management_list/ListBL?Page=<%=Integer.parseInt(nowPage) + 1%>">&gt;</a></li>
-			<li><a href="/management_list/ListBL?Page=<%=maxPage %>">&gt;&gt;</a></li>
-		<%} %>
-	</ul>
+			<%}%>
+			<li>
+				<%if (now == maxPage) {%> <a><%=">"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=now + 1%>&Serch=<%=Serch %>"><%=">"%></a>
+				<%}%>
+			</li>
+			<li>
+				<%if (now == maxPage) {%> <a><%=">>"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=maxPage%>&Serch=<%=Serch %>"><%=">>"%></a>
+				<%}%>
+			</li>
+		</ul>
 </form>
 
-
-<!-- DB表示するテーブル部分 -->
-
+<!-- 取得したDB情報を表示するテーブル部分 -->
 <table class="listcss">
 	<tr>
 		<th width="30px" >No.</th>
@@ -144,96 +137,94 @@ rs = (ResultSet) request.getAttribute("Result");
 		<th width="80px" ><font color="#c71585f">カテゴリ</font></th>
 		<th></th>
 	</tr>
-<% while (rs.next()) { %>
-
+<% for (int s = 0; s < beanList.size(); s++) { %>
+<% if(beanList.get(s).getDeleteFlg().equals("0")) {%>
 	<tr>
-		<td><p><%=rs.getInt("id") %></p></td>
-    	<td><p><%=rs.getString("name") %></p></td>
-    	<td><p class="threereader"><%=rs.getString("address") %><span class="tooltip"><%=rs.getString("address") %></span></p></td>
-    	<%if (rs.getString("tel").equals("")) { %>
+		<td><p><%=beanList.get(s).getId() %></p></td>
+    	<td><p><%=beanList.get(s).getName() %></p></td>
+    	<td><p class="threereader"><%=beanList.get(s).getAddress() %><span class="tooltip"><%=beanList.get(s).getAddress() %></span></p></td>
+    	<%if (beanList.get(s).getTel().equals("")) { %>
     		<td>&nbsp;</td>
     	<%} else { %>
-    		<td><p><%=rs.getString("tel").substring(0, 3) + "-" + rs.getString("tel").substring(3, 7) + "-" + rs.getString("tel").substring(7, 11)%></p></td>
+    		<td><p><%=beanList.get(s).getTel().substring(0, 3) + "-" + beanList.get(s).getTel().substring(3, 7) + "-" + beanList.get(s).getTel().substring(7, 11)%></p></td>
     	<%} %>
-    	<td><p><font color="#c71585f"><%=rs.getString("categoryname") %></font></p></td>
+    	<td><p><font color="#c71585f"><%=beanList.get(s).getCategoryName() %></font></p></td>
     	<td>
     	<form method="post">
-    	<input type="hidden" name="id" value="<%=rs.getInt("id") %>">
-    	<input type="hidden" name="name" value="<%=rs.getString("name") %>">
-    	<input type="hidden" name="address" value="<%=rs.getString("address") %>">
-    	<%if (rs.getString("tel").equals("")) { %>
-    		<input type="hidden" name="tel" value="<%=rs.getString("tel") %>">
+    	<input type="hidden" name="id" value="<%=beanList.get(s).getId() %>">
+    	<input type="hidden" name="name" value="<%=beanList.get(s).getName() %>">
+    	<input type="hidden" name="address" value="<%=beanList.get(s).getAddress() %>">
+    	<%if (beanList.get(s).getTel().equals("")) { %>
+    		<input type="hidden" name="tel" value="<%=beanList.get(s).getTel() %>">
     	<%} else { %>
-    		<input type="hidden" name="tel" value="<%=rs.getString("tel").substring(0, 3) + "-" + rs.getString("tel").substring(3, 7) + "-" + rs.getString("tel").substring(7, 11) %>">
+    		<input type="hidden" name="tel" value="<%=beanList.get(s).getTel().substring(0, 3) + "-" + beanList.get(s).getTel().substring(3, 7) + "-" + beanList.get(s).getTel().substring(7, 11) %>">
     	<%} %>
-    	<input type="hidden" name="categoryname" value="<%=rs.getString("categoryname") %>">
-    	<input type="submit" class="button2" formaction="./jsp/Edit.jsp" value="編集"><input type="submit" class="button2" formaction="./jsp/Delete.jsp" value="削除"></form></td>
+    	<input type="hidden" name="categoryname" value="<%=beanList.get(s).getCategoryName() %>">
+    	<input type="submit" class="table-button" formaction="./Edit.jsp" value="編集"><input type="submit" class="table-button" formaction="./Delete.jsp" value="削除"></form></td>
 	</tr>
+<% } %>
 <% } %>
 </table>
 
-<!-- ページング処理を書くよ！ -->
-<form method="get">
-	<ul>
-		<!-- 最初に飛ぶ、一段下がる部分 -->
-		<%if (Integer.parseInt(nowPage) == 1) { %>
-			<li>&lt;&lt;</li>
-			<li>&lt;</li>
-		<%} else { %>
-			<li><a href="/management_list/ListBL?Page=1">&lt;&lt;</a></li>
-			<li><a href="/management_list/ListBL?Page=<%=Integer.parseInt(nowPage) - 1 %>">&lt;</a></li>
-		<%} %>
-
-		<!-- 数字で移動する部分 -->
-		<%if (Integer.parseInt(nowPage) == 1 || Integer.parseInt(nowPage) == 2) { %>
-			<%for (int i = 1; i < 6; i++) {%>
-				<%if (Integer.parseInt(nowPage) == i) { %>
-					<li><%=i %></li>
-				<%} else { %>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i %></a></li>
-				<%} %>
-				<%if (i != 5) {%>
-					<li>|</li>
-				<%} %>
-			<%} %>
-
-		<%} else if (Integer.parseInt(nowPage) == maxPage || Integer.parseInt(nowPage) == maxPage - 1) { %>
-			<%for (int i = maxPage - 4; i <= maxPage; i++) { %>
-				<%if (Integer.parseInt(nowPage) == i) {%>
-					<li><%=i%></li>
-				<%} else {%>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i%></a></li>
-				<%} %>
-				<%if (maxPage != i) {%>
-					<li>|</li>
-				<%} %>
+<!-- ページング処理 -->
+<form class="page-down" action="ListBL" method="get">
+		<ul>
+			<li>
+				<%if (now == 1) {%>
+			<a><%="<<"%></a>
+			<%} else { %>
+			<a href="ListBL?Page=1&Serch=<%=Serch %>"><%="<<"%></a>
 			<%}%>
-		<%} else { %>
-			<%for (int i = Integer.parseInt(nowPage) -2; i < Integer.parseInt(nowPage) + 3; i++) { %>
-				<%if (Integer.parseInt(nowPage) == i) { %>
-					<li><%=i %></li>
+			</li>
+			<li>
+				<%if (now == 1) {%> <a><%="<"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=now - 1%>&Serch=<%=Serch %>"><%="<"%></a>
+				<%}%>
+			</li>
+			<%
+				if (maxPage <= 5) {
+				start = 1;
+				end = maxPage;
+			} else if (now == maxPage || now == maxPage - 1) {
+				start = maxPage - 4;
+				end = maxPage;
+			} else if (now >= 3) {
+				start = now - 2;
+				end = now + 2;
+			} else {
+				start = 1;
+				end = 5;
+			}
+			for (int i = start; i <= end; i++) {
+			%>
+			<li>
+				<%if (now == i) {%>
+				<a><%=i%></a>
 				<%} else { %>
-					<li><a href="/management_list/ListBL?Page=<%=i %>"><%=i%></a></li>
-				<%} %>
-				<%if (Integer.parseInt(nowPage) + 2 != i) {%>
-					<li>|</li>
-				<%} %>
+				<a href="ListBL?Page=<%=i%>&Serch=<%=Serch %>"><%=i%></a>
+				<%}%>
+			</li>
+			<%if (maxPage != i) {%>
+			<li>|</li>
 			<%} %>
-		<%} %>
-
-		<!-- 最後に飛ぶ、一段上がる部分 -->
-		<%if (Integer.parseInt(nowPage) == maxPage) { %>
-			<li>&gt;</li>
-			<li>&gt;&gt;</li>
-		<%} else { %>
-			<li><a href="/management_list/ListBL?Page=<%=Integer.parseInt(nowPage) + 1%>">&gt;</a></li>
-			<li><a href="/management_list/ListBL?Page=<%=maxPage %>">&gt;&gt;</a></li>
-		<%} %>
-	</ul>
+			<%}%>
+			<li>
+				<%if (now == maxPage) {%> <a><%=">"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=now + 1%>&Serch=<%=Serch %>"><%=">"%></a>
+				<%}%>
+			</li>
+			<li>
+				<%if (now == maxPage) {%> <a><%=">>"%></a>
+				<%} else {%>
+				<a href="ListBL?Page=<%=maxPage%>&Serch=<%=Serch %>"><%=">>"%></a>
+				<%}%>
+			</li>
+		</ul>
 </form>
-
-<input id="add" type="button" onclick="location.href='./jsp/Add.jsp'" value="新規登録" class="top">
+<!-- 新規登録ボタン -->
+<input id="add" type="button" onclick="location.href='./jsp/Add.jsp'" value="新規登録" class="button-bottom">
 
 </body>
-
 </html>

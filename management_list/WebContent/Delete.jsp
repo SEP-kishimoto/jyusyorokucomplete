@@ -3,7 +3,7 @@
 
 <%@ page
 import="jyusyoroku.AddBL"
-import="common.Common"
+import="jyusyoroku.Common"
 %>
 
 

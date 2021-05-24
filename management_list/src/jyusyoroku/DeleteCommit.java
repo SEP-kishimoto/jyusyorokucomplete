@@ -30,14 +30,6 @@ public class DeleteCommit extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		/*
 		 * 変数の宣言
 		 */
@@ -75,11 +67,28 @@ public class DeleteCommit extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/*
+		 * connectを閉じる
+		 */
+		try {
+			connect.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		// ListBL.javaへの遷移
-		String view = "/management_list/ListBL";
-		response.sendRedirect(view);
+		/*
+		 * ListBL.javaへの遷移
+		 */
+		getServletContext().getRequestDispatcher("/ListBL").forward(request, response);
+	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

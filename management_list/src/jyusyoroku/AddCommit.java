@@ -82,7 +82,15 @@ public class AddCommit extends HttpServlet {
 			 * DBへ登録する
 			 */
 			stmt.executeUpdate(InsQuery);
-
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		/*
+		 * connectを閉じる
+		 */
+		try {
+			connect.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

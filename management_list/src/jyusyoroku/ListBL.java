@@ -117,6 +117,7 @@ public class ListBL extends HttpServlet {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
+		} finally {
 		}
 
 		/*
@@ -169,7 +170,16 @@ public class ListBL extends HttpServlet {
 			Serch = "";
 		}
 		request.setAttribute("Serch", Serch);
-
+		
+		/*
+		 * connectを閉じる
+		 */
+		try {
+			connect.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		/*
 		 * List.jspへ遷移
 		 */

@@ -85,6 +85,15 @@ public class EditCommit extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		/*
+		 * connectを閉じる
+		 */
+		try {
+			connect.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		/*
 		 * ListBLへの遷移

@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 
 public class Common {
@@ -78,12 +79,13 @@ public class Common {
 	 * @see java.jyusyoroku.Common
 	 * */
 
-	public ResultSet getCategoryAll() {
+	public static ArrayList<CategoryBean> getCategoryAll() {
 
 		// DB接続用変数
 		Connection connect = null;
 		Statement stmt = null;
 		ResultSet rs = null;
+		ArrayList<CategoryBean> beancategory = new ArrayList<CategoryBean>();
 
 		// 取得用クエリ
 		String getQuery = "";
@@ -99,13 +101,23 @@ public class Common {
 
 			// 実施
 			rs = stmt.executeQuery(getQuery);
+			
+			while(rs.next()) {
+				CategoryBean bean = new CategoryBean();
+				bean.setCategoryId(rs.getString("categoryid"));
+				bean.setCategoryName(rs.getString("categoryname"));
+				
+				beancategory.add(bean);
+			}
+			
+			connect.close();
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 
 
-		return rs;
+		return beancategory;
 	}
 
 	public String getCategoryName(String id) {
@@ -136,6 +148,8 @@ public class Common {
 			rs = ps.executeQuery();
 			rs.next();
 			categoryname = rs.getString("categoryname");
+			
+			connect.close();
 
 		} catch(Exception e) {
 			e.printStackTrace();

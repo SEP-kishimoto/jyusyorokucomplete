@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="jyusyoroku.EditBL" import="jyusyoroku.Common" import="java.sql.ResultSet" %>
+    pageEncoding="UTF-8" import="jyusyoroku.EditBL" import="jyusyoroku.*" import="java.sql.ResultSet" import="java.util.*"%>
 <!-- 文字コード宣言 -->
 <%
 request.setCharacterEncoding("UTF-8");
@@ -31,7 +31,8 @@ ResultSet rs = null;
 <!-- common.getCategoryAll()で取得した値をrsに格納する -->
 <%
 Common common = new Common();
-rs = common.getCategoryAll();
+ArrayList<CategoryBean> beancategory = new ArrayList<CategoryBean>();
+beancategory = Common.getCategoryAll();
 
 %>
 
@@ -71,11 +72,11 @@ if (errmsg == null) {
 		<%} %>
 		<dt>カテゴリ</dt><dd><span>:</span>
 		<select name="categoryid" >
-			<%while(rs.next()) { %>
-				<%if (category.equals(rs.getString("categoryname"))) {%>
-					<option value="<%=rs.getString("categoryid") %>" selected><%=rs.getString("categoryname") %></option>
+			<%for (int i = 0; i < beancategory.size(); i++) { %>
+				<%if (category.equals(beancategory.get(i).getCategoryName())) {%>
+					<option value="<%=beancategory.get(i).getCategoryId() %>" selected><%=beancategory.get(i).getCategoryName() %></option>
 				<%} else { %>
-					<option value="<%=rs.getString("categoryid") %>"><%=rs.getString("categoryname") %></option>
+					<option value="<%=beancategory.get(i).getCategoryId() %>"><%=beancategory.get(i).getCategoryName() %></option>
 				<%} %>
 			<%} %>
 		</select>

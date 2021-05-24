@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="jyusyoroku.AddBL" import="jyusyoroku.Common" import="java.sql.ResultSet"%>
+    pageEncoding="UTF-8" import="jyusyoroku.AddBL" import="jyusyoroku.*" import="java.sql.ResultSet" import="java.util.*" %>
 <!-- 文字コード -->
 <%
 request.setCharacterEncoding("UTF-8");
@@ -27,7 +27,8 @@ ResultSet rs = null;
 <!-- common.getCategoryAll()で取得した値を格納 -->
 <%
 Common common = new Common();
-rs = common.getCategoryAll();
+ArrayList<CategoryBean> beancategory = new ArrayList<CategoryBean>();
+beancategory = Common.getCategoryAll();
 %>
 <!-- リクエスト(name)がnullの場合に行う処理 -->
 <%
@@ -54,8 +55,8 @@ if (request.getParameter("name") == null) {
 		<dt>電話番号</dt><dd><span>:&nbsp;</span><input type="text" id="tel" name="tel" value="<%=tel %>"></dd>
 		<dt>カテゴリ</dt><dd><span>:</span>
 		<select  name="categoryid" >
-			<%while(rs.next()) { %>
-				<option value="<%=rs.getString("categoryid")%>"><%=rs.getString("categoryname") %></option>
+			<%for(int i = 0; i < beancategory.size(); i++) { %>
+				<option value="<%=beancategory.get(i).getCategoryId() %>"><%=beancategory.get(i).getCategoryName() %></option>
 			<%} %>
 		</select></dd>
 	</dl>

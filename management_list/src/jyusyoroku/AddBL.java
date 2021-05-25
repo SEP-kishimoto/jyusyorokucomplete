@@ -34,21 +34,14 @@ public class AddBL extends HttpServlet {
 		
 		/*
 		 * 変数の宣言
+		 * 変数にrequestした値を入れる
 		 * name, address, tel, categoryid, errmsg
 		 */
-		String name = "";
-		String address = "";
-		String tel = "";
-		String categoryid = "";
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String tel = request.getParameter("tel");
+		String categoryid = request.getParameter("categoryid");
 		String errmsg = "";
-
-		/*
-		 * 値の設定
-		 */
-		name = request.getParameter("name");
-		address = request.getParameter("address");
-		tel = request.getParameter("tel");
-		categoryid = request.getParameter("categoryid");
 
 		/*
 		 * エラーメッセージを設定

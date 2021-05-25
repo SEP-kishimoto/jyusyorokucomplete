@@ -32,17 +32,13 @@ public class DeleteCommit extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*
 		 * 変数の宣言
+		 * 変数にrequestした値を入れる
 		 */
 		Connection connect = null;
 		Statement stmt = null;
 
 		String UpdQuery = "";
-		String id = "";
-
-		/*
-		 * 値を設定する
-		 */
-		id = request.getParameter("id");
+		String id = request.getParameter("id");;
 
 		/*
 		 * DBのdelete_flgを更新し、非表示にする。

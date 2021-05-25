@@ -164,7 +164,6 @@ public class ListBL extends HttpServlet {
 		 */
 		request.setAttribute("listCnt", listCnt);
 		request.setAttribute("beanList", beanList);
-		request.setAttribute("Result", rs);
 		request.setAttribute("Page", nowPage);
 		if (Serch == null) {
 			Serch = "";

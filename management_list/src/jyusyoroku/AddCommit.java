@@ -43,22 +43,14 @@ public class AddCommit extends HttpServlet {
 
 		/*
 		 * 変数を宣言
-		 * リクエストされた値を格納するname, address, tel, categoryid
+		 * 変数にrequestした値を入れる
 		 * SQL文の変数InsQuery
 		 */
-		String name = "";
-		String address = "";
-		String tel = "";
-		String categoryid = "";
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String tel = request.getParameter("tel");
+		String categoryid = request.getParameter("categoryid");
 		String InsQuery = "";
-
-		/*
-		 * 変数に値を設定
-		 */
-		name = request.getParameter("name");
-		address = request.getParameter("address");
-		tel = request.getParameter("tel");
-		categoryid = request.getParameter("categoryid");
 
 		/*
 		 * 変数telの文字列から-を取り除く

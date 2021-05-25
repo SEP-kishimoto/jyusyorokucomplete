@@ -18,7 +18,6 @@ request.setCharacterEncoding("UTF-8");
 
 <!-- 変数の宣言 -->
 <%
-ResultSet rs = null;
 int listCnt = 0;
 String nowPage = null;
 int maxPage = 0;
@@ -46,7 +45,6 @@ if (listCnt == 0) {
 }
 
 beanList = (ArrayList<jyusyoroku.ListBean>) request.getAttribute("beanList");
-rs = (ResultSet) request.getAttribute("Result");
 %>
 
 <!-- 表示画面のコード -->

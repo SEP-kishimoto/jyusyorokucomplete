@@ -34,22 +34,14 @@ public class EditBL extends HttpServlet {
 		
 		/*
 		 * 変数を宣言
+		 * 変数にrequestした値を入れる
 		 */
-		String id = "";
-		String name = "";
-		String address = "";
-		String tel = "";
-		String categoryid = "";
+		String id = request.getParameter("id");;
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String tel = request.getParameter("tel");
+		String categoryid = request.getParameter("categoryid");
 		String errmsg = "";
-
-		/*
-		 * 値を設定
-		 */
-		id = request.getParameter("id");
-		name = request.getParameter("name");
-		address = request.getParameter("address");
-		tel = request.getParameter("tel");
-		categoryid = request.getParameter("categoryid");
 
 		/*
 		 * エラーメッセージを設定

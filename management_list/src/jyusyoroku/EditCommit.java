@@ -37,25 +37,17 @@ public class EditCommit extends HttpServlet {
 
 		/*
 		 * 変数の宣言
+		 * 変数にrequestした値を入れる
 		 */
 		Connection connect = null;
 		Statement stmt = null;
 
 		String UpdQuery = "";
-		String id = "";
-		String name = "";
-		String address = "";
-		String tel = "";
-		String categoryid = "";
-
-		/*
-		 * 変数に値を設定
-		 */
-		id = request.getParameter("id");
-		name = request.getParameter("name");
-		address = request.getParameter("address");
-		tel = request.getParameter("tel");
-		categoryid = request.getParameter("categoryid");
+		String id = request.getParameter("id");;
+		String name = request.getParameter("name");
+		String address = request.getParameter("address");
+		String tel = request.getParameter("tel");
+		String categoryid = request.getParameter("categoryid");
 
 		/*
 		 * telから-を除去する

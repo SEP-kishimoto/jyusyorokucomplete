@@ -31,7 +31,7 @@ categoryid = (String) request.getAttribute("categoryid");
 Common common = new Common();
 categoryname = common.getCategoryName(categoryid);
 %>
-
+<h1>住所録管理システム：住所録登録確認</h1>
 <form method="post">
 	<dl>
 		<dt>名前*</dt><dd><span>:&nbsp;</span><%=name %> <input type="hidden" value="<%=name %>" name="name"></dd>

@@ -56,7 +56,7 @@ if (errmsg == null) {
 	category = common.getCategoryName(categoryid);
 }
 %>
-
+<h1>住所録管理システム：住所録編集</h1>
 <form method="post">
 	<input type="hidden" name="id" value="<%=id %>">
 	<dl>
